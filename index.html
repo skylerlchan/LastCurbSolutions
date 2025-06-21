@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LastCurb – The Curb Intelligence API</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .container {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    header img {
+      height: 32px;
+      border-radius: 6px;
+      margin-right: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    nav a {
+      margin-left: 24px;
+      color: #0051ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #000;
+    }
+
+    .hero {
+      padding-top: clamp(1.5rem, 5vw, 3rem);
+      padding-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .punch-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin: 2rem 0 2rem;
+      line-height: 1.15;
+      min-height: 7.5rem;
+    }
+
+    .punch-line {
+      white-space: nowrap;
+      transition: opacity 0.3s ease-in-out;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .punch-top {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      color: #000;
+      text-transform: uppercase;
+      min-height: 1.6em;
+      opacity: 1;
+    }
+
+    .punch-bottom {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      margin-top: 0.25em;
+      color: #0051ff;
+      font-weight: 800;
+    }
+
+    .button {
+      background: #000;
+      color: #fff;
+      padding: 16px 36px;
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: #111;
+      transform: translateY(-2px);
+    }
+
+    .code-tab {
+  background: #0b0f19;
+  color: #cbd5e1;
+  border: 1px solid #333;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background 0.2s ease;
+    }
+    .code-tab.active {
+  background: #1e293b;
+  border-color: #66ccff;
+  color: #fff;
+    }
+    .code-tab:hover {
+     background: #1a1f2b;
+    }
+    section {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    section h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+
+    pre {
+      background: #f7f9fa;
+      padding: 24px;
+      border-left: 6px solid #0051ff;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 1rem;
+      text-align: left;
+      overflow-x: auto;
+      margin: 2rem auto;
+      max-width: 100%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 48px 0;
+      color: #888;
+      border-top: 1px solid #eee;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .container {
+        padding-left: 3rem;
+        padding-right: 3rem;
+      }
+    }
+    #code-blocks {
+  background: #f7f9fa;
+  border-left: 6px solid #0051ff;
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  width: 100%;
+  max-width: 700px;
+  text-align: left;
+  overflow-x: auto;
+
+  /* NEW: add smooth vertical expansion */
+  min-height: 220px;
+  transition: height 0.4s ease-out;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="Logos/lastcurb-logo.png" alt="LastCurb Logo" />
+        LASTCURB
+      </div>
+      <nav>
+        <a href="#api">API</a>
+        <a href="#demo">Demo</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+  </div>
+
+  <div class="container">
+    <section class="hero">
+      <div class="punch-container">
+        <div id="rotating-subject" class="punch-line punch-top">Waymo fleets</div>
+        <div class="punch-line punch-bottom">need to know where to stop.</div>
+      </div>
+
+
+    <div class="container" style="margin: 2rem auto; position: relative; z-index: 1;">
+  <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <source src="LastCurb_video_3.mp4" type="video/mp4" />
+  </video>
+    </div>
+      <!-- EDGE-TO-EDGE DESCRIPTION BOX -->
+<div style="width: 100vw; display: flex; justify-content: center; margin-top: 2rem;">
+  <div style="background: #fafafa; border: 1px solid #eee; border-radius: 16px; padding: 2rem 1.5rem; width: 100%; max-width: 1000px; box-shadow: 0 8px 32px rgba(0,0,0,0.05); text-align: center;">
+
+    <h2 style="font-size: 1.25rem; font-weight: 600; color: #444; margin-bottom: 1rem;">
+      The Curb Intelligence API for Fleets & Cities
+    </h2>
+
+    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1.5rem;">
+      LastCurb gives you real-time curb legality and availability data through a simple API.<br />
+      Use it to guide AVs, dispatch deliveries, or build smarter infrastructure.
+    </p>
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+      <a href="#demo" class="button" style="background: #000; color: #fff; padding: 12px 24px; font-weight: 700; font-size: 1rem; text-decoration: none; border-radius: 8px;">🧪 Explore Live Demo</a>
+      <a href="#api" class="button" style="background: #0051ff; color: #fff; padding: 12px 24px; font-weight: 700; font-size: 1rem; text-decoration: none; border-radius: 8px;">📘 Read API Docs</a>
+    </div>
+
+    <p style="font-size: 0.85rem; color: #888;">
+      This is a simulation only. Real-time API is in private beta.
+    </p>
+
+       </div>
+      </div>
+    </section>
+  </div>
+<section id="api" style="display: flex; justify-content: center; margin-top: 2rem;">
+  <div style="
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 1000px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    text-align: center;
+  ">
+    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">
+      Designed for Developers
+    </h2>
+
+    <!-- Code Tab Header -->
+    <div id="code-tabs" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem;">
+      <button class="code-tab active" data-lang="js">JavaScript</button>
+      <button class="code-tab" data-lang="python">Python</button>
+      <button class="code-tab" data-lang="curl">cURL</button>
+    </div>
+
+    <!-- Code Blocks -->
+    <div id="code-blocks" style="
+      background: #f7f9fa;
+      border-left: 6px solid #0051ff;
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 700px;
+      text-align: left;
+      overflow-x: auto;
+      min-height: 220px;
+      transition: height 0.4s ease-out;
+      margin: 0 auto;
+    ">
+      <pre class="code-content js"><code data-code='const coords = { lat: 37.7749, lon: -122.4194 };\nconst res = await fetch(`https://api.lastcurb.com/curb-availability?lat=${coords.lat}&lon=${coords.lon}`);\nconst data = await res.json();\n\nif (data.available) {\n  guideVehicleTo(data.spot);\n} else {\n  rerouteVehicle();\n}'></code></pre>
+
+      <pre class="code-content python" style="display: none;"><code data-code='import requests\n\ncoords = {"lat": 37.7749, "lon": -122.4194}\nres = requests.get("https://api.lastcurb.com/curb-availability", params=coords)\ndata = res.json()\n\nif data["available"]:\n    guide_vehicle_to(data["spot"])\nelse:\n    reroute_vehicle()'></code></pre>
+
+      <pre class="code-content curl" style="display: none;"><code data-code='curl "https://api.lastcurb.com/curb-availability?lat=37.7749&lon=-122.4194"'></code></pre>
+    </div>
+
+    <p style="margin-top: 2rem; font-size: 0.95rem; color: #666; max-width: 700px; margin-left: auto; margin-right: auto;">
+      RESTful. Real-time. Machine-readable.<br />The curb as code.
+    </p>
+  </div>
+</section>
+
+  <script>
+    const fadeSubjects = [
+      "Uber drivers",
+      "Amazon drivers",
+      "FedEx vans",
+      "Waymo fleets",
+      "Tesla Autopilot",
+      "UPS trucks",
+      "DoorDashers",
+      "Lyft rides",
+      "Instacart Shoppers",
+      "Cruise AVs",
+    ];
+
+    let index = 0;
+    const el = document.getElementById("rotating-subject");
+
+    function rotate() {
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.textContent = fadeSubjects[index % fadeSubjects.length];
+        el.style.opacity = 1;
+        index++;
+      }, 250);
+    }
+
+    setInterval(rotate, 2500);
+  </script>
+
+  <script>
+  const tabs = document.querySelectorAll('.code-tab');
+  const blocks = document.querySelectorAll('.code-content');
+function typeCode(element, text, speed = 10) {
+  element.innerHTML = "";
+  const container = document.getElementById("code-blocks");
+  let i = 0;
+  const lineHeight = 24; // px
+  const baseHeight = 220;
+
+  function type() {
+    if (i < text.length) {
+      element.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+      i++;
+      const lines = text.slice(0, i).split("\n").length;
+      container.style.height = `${baseHeight + lines * lineHeight}px`;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+
+function activateTab(lang) {
+  document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.code-content').forEach(b => b.style.display = 'none');
+
+  const activeTab = document.querySelector(`.code-tab[data-lang="${lang}"]`);
+  const activeBlock = document.querySelector(`.code-content.${lang}`);
+  const codeEl = activeBlock.querySelector('code');
+  const codeText = codeEl.getAttribute('data-code');
+
+  activeTab.classList.add('active');
+  activeBlock.style.display = 'block';
+  typeCode(codeEl, codeText);
+}
+
+document.querySelectorAll('.code-tab').forEach(tab =>
+  tab.addEventListener('click', () => activateTab(tab.dataset.lang))
+);
+
+// Initial run
+activateTab('js');
+
+
+  // Tab switching
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab.dataset.lang));
+  });
+  </script>
+
+
+</body>
+</html>
